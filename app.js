@@ -25,6 +25,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+// uncaughtException 避免程序崩溃
+process.on('uncaughtException', function (err) {
+  console.log(err);
+});
+
+/*
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -55,6 +61,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+*/
 
+app.listen(3000);
 
 module.exports = app;
