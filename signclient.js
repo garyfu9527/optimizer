@@ -2,7 +2,7 @@
  * Created by fugang on 16/2/10.
  */
 var WebSocket = require('ws');
-var ws = new WebSocket('ws://localhost:8080');
+var ws = new WebSocket('ws://localhost:8081');
 
 ws.on('open', function open() {
 });
