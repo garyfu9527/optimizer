@@ -64,6 +64,7 @@ wss.on('connection', function connection(ws) {
     if (commandId && reqObj[commandId]) {
       var res = reqObj[commandId];
       //返回client签名后的数据
+      logger.info(typeof resData.results);
       res.write(resData.results);
       res.end(function(){
         delete reqObj[commandId];
