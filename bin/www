@@ -88,3 +88,9 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+var logger = require('../common').logger;
+// uncaughtException 避免程序崩溃
+process.on('uncaughtException', function (err) {
+  logger.error(err.stack);
+});
