@@ -22,9 +22,9 @@ router.get('/', function(req, res, next) {
 var reqObj = {};
 var commandId = 0;
 var wsPool = [];  //websocket pool
-router.post('/signURL', function(req, res, next) {
+router.post('/signurl', function(req, res, next) {
   easypost.get(req, res, function(data){
-    logger.info('signURL post data is %s', data);
+    logger.info('signurl post data is %s', data);
 
     if (wsPool.length <= 0) {
       res.end();
@@ -61,12 +61,10 @@ wss.on('connection', function connection(ws) {
     logger.info('get message %s', message);
     var resData = JSON.parse(message);
     var commandId = resData.commandId;
-    if (commandId && reqObj[commandId]) {
-      var res = reqObj[commandId];
+    var res = commandId && reqObj[commandId];
+    if (res) {
       //返回client签名后的数据
-      logger.info(typeof resData.results);
-      res.write(resData.results);
-      res.end(function(){
+      res.end(resData.results, function(){
         delete reqObj[commandId];
       });
     }
@@ -77,6 +75,11 @@ wss.on('connection', function connection(ws) {
     wsPool = _.reject(wsPool, function(obj){ return obj==ws; });
     logger.info('close ws，pool size:%d', wsPool.length);
   });
+});
+
+// uncaughtException 避免程序崩溃
+process.on('uncaughtException', function (err) {
+  logger.error(err.stack);
 });
 
 module.exports = router;
