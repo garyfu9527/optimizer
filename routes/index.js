@@ -58,13 +58,13 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function(message){
     //收到签名完成信息
-    console.info('get message %s', message);
+    logger.info('get message %s', message);
     var resData = JSON.parse(message);
     var commandId = resData.commandId;
     if (commandId && reqObj[commandId]) {
       var res = reqObj[commandId];
       //返回client签名后的数据
-      res.write(JSON.stringify(resData.results));
+      res.write(resData.results);
       res.end(function(){
         delete reqObj[commandId];
       });
