@@ -18,11 +18,12 @@ ws.on('message', function(data, flags) {
     // flags.masked will be set if the data was masked.
     console.info('receive data from server %s', data);
     var dataObj = JSON.parse(data);
-    var sendData = JSON.stringify({
+    var sendData = {
         command:'sign',
         commandId:dataObj.commandId,
         results:dataObj.resource
-    });
+    };
+    sendData = JSON.stringify(sendData);
     console.info('send data %s', sendData);
 
     ws.send(sendData);

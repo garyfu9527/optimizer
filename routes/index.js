@@ -29,11 +29,6 @@ router.post('/signurl', function(req, res, next) {
     }
   });
 
-  var urls = req.body['urls'];
-  if (typeof urls === 'object') {
-    urls = JSON.stringify(urls);
-  }
-
   if (common.wsPool.length <= 0) {
     res.end();
   } else {
@@ -47,7 +42,7 @@ router.post('/signurl', function(req, res, next) {
     var dataSend = {
       'command':'sign',
       'commandId':++commandId,
-      'resource':urls
+      'resource':req.body
     };
     reqObj[commandId] = res;
     ws.send(JSON.stringify(dataSend));

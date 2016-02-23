@@ -26,9 +26,6 @@ wss.on('connection', function connection(ws) {
                     command:"heartbeat"
                 }));
             } else if(resData.command == 'sign') { //签名完成
-                if (typeof resData.results === 'object') {
-                    resData.results = JSON.stringify(resData.results);
-                }
                 var sendData = JSON.stringify({
                     code:0,
                     data:resData.results
